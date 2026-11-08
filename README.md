@@ -25,7 +25,7 @@ Press and **hold ⚙️ for 2 seconds** (opens automatically the first time).
 - Map follows the car, sounds on/off
 
 ## Notes
-- The iPad needs internet: maps come from CARTO/OpenStreetMap and routes from the public
+- The iPad needs internet: maps come from OpenStreetMap and routes from the public
   OSRM demo server. If routing is unreachable it falls back to a blocky made-up route.
 - Screen stays awake while tracking (iPadOS 16.4+).
 - Closing the app mid-order is fine; it picks up where it left off.

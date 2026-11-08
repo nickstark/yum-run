@@ -134,9 +134,10 @@ function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
 }
 function tiles() {
-  return L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    subdomains: 'abcd', maxZoom: 19, crossOrigin: true,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
+  // OpenStreetMap standard tiles: free, no key. Usage policy requires visible attribution.
+  return L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19, crossOrigin: true,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   });
 }
 const pinIcon = (html, cls = '') => L.divIcon({ className: '', html: `<div class="pin ${cls}">${html}</div>`, iconSize: [48, 48], iconAnchor: [24, 24] });
@@ -190,7 +191,8 @@ let orderToken = 0, heading = null, lastPhase = -1, lastFit = 0, lastLine = 0, u
 
 function ensureMap() {
   if (map) return;
-  map = L.map('map', { zoomControl: false, attributionControl: true }).setView(settings.home, 14);
+  map = L.map('map', { zoomControl: false, attributionControl: false }).setView(settings.home, 14);
+  L.control.attribution({ position: 'topright' }).addTo(map);  // keep credit visible above the bottom sheet
   tiles().addTo(map);
   layer = L.layerGroup().addTo(map);
   map.on('dragstart', () => { userMovedAt = Date.now(); });
@@ -255,7 +257,7 @@ function beginTracking() {
   carM = L.marker(start, { icon: carIcon(order.car[1]), zIndexOffset: 200, opacity: 0 }).addTo(layer);
   setText('#dasherAvatar', order.dasher[1]);
   setText('#dasherName', order.dasher[0]);
-  setText('#dasherCar', `Driving a ${order.car[0]} car`);
+  setText('#dasherCar', `Driving ${order.car[0] === "orange" ? "an" : "a"} ${order.car[0]} car`);
   requestAnimationFrame(() => { map.invalidateSize(); fit(path.pts, false); });
   keepAwake(true);
   cancelAnimationFrame(rafId); rafId = requestAnimationFrame(tick);
