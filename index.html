@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Yum Run</title>
+<meta name="theme-color" content="#ff5a36">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Yum Run">
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ ORDER SCREEN ============ -->
+<section id="order" class="screen">
+  <button id="gear" class="gear" aria-label="Grown-up settings (press and hold)">⚙️</button>
+  <header class="brand">
+    <div class="logo">🛵</div>
+    <h1>Yum Run</h1>
+    <p>What sounds yummy?</p>
+  </header>
+  <div id="menu" class="menu"></div>
+  <button id="orderBtn" class="order-btn" disabled>Order Food</button>
+  <p class="hint">Pick a food, then tap Order!</p>
+</section>
+
+<!-- ============ TRACKING SCREEN ============ -->
+<section id="track" class="screen">
+  <div id="map"></div>
+  <button id="cancelBtn" class="back" aria-label="Cancel order">✕</button>
+  <div class="sheet" id="sheet">
+    <div class="grab"></div>
+    <div class="eta">
+      <span id="etaLabel">Estimated arrival</span>
+      <strong id="etaTime">…</strong>
+    </div>
+    <h2 id="statusTitle">Sending your order…</h2>
+    <p id="statusSub">&nbsp;</p>
+    <div class="bar" id="bar">
+      <i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i>
+    </div>
+    <div class="bar-icons" id="barIcons">
+      <span>🧾</span><span>👩‍🍳</span><span>🛍️</span><span>🚗</span>
+    </div>
+    <div class="dasher">
+      <div class="avatar" id="dasherAvatar">🧑</div>
+      <div><strong id="dasherName">Finding a driver…</strong><small id="dasherCar">&nbsp;</small></div>
+    </div>
+  </div>
+
+  <div id="delivered" class="delivered hidden">
+    <canvas id="confetti"></canvas>
+    <div class="big" id="deliveredEmoji">🍕</div>
+    <h2 id="deliveredTitle">Your food is here!</h2>
+    <p id="deliveredSub"></p>
+    <button id="againBtn" class="order-btn">Order again</button>
+  </div>
+</section>
+
+<!-- ============ SETTINGS (grown-ups) ============ -->
+<section id="settings" class="screen">
+  <div class="set-wrap">
+    <h2 class="set-title">Grown-up settings</h2>
+    <p id="setIntro" class="muted"></p>
+
+    <div class="card">
+      <strong>Home</strong>
+      <p class="muted small">Drag the 🏠 onto your house, tap the map, or search an address. The dotted circle is where drivers start.</p>
+      <form id="searchForm" class="search">
+        <input id="searchBox" type="search" placeholder="Search address" autocomplete="off">
+        <button class="btn" type="submit">Find</button>
+      </form>
+      <div id="homeMap"></div>
+      <button id="locateBtn" class="btn" type="button">📍 Use my current location</button>
+      <p id="locMsg" class="muted small"></p>
+    </div>
+
+    <div class="card">
+      <label class="row"><span>Driver starts about</span><b id="radiusVal"></b></label>
+      <input id="radius" type="range" min="0.5" max="5" step="0.25">
+      <label class="row"><span>Whole order takes</span><b id="minutesVal"></b></label>
+      <input id="minutes" type="range" min="1" max="20" step="1">
+      <label class="row check"><span>Map follows the car</span><input id="follow" type="checkbox"></label>
+      <label class="row check"><span>Sounds</span><input id="sound" type="checkbox"></label>
+    </div>
+
+    <div class="set-actions">
+      <button id="resetOrder" class="btn" type="button">Clear current order</button>
+      <button id="doneBtn" class="btn primary" type="button">Done</button>
+    </div>
+    <p class="muted small center">Hold ⚙️ for 2 seconds to get back here.</p>
+  </div>
+</section>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
